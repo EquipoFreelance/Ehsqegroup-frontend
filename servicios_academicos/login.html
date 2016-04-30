@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>EHSQ | Bienvenido </title>
+      <!-- Bootstrap core CSS -->
+      <link href="../css/bootstrap.min.css" rel="stylesheet">
+      <link href="../fonts/css/font-awesome.min.css" rel="stylesheet">
+      <link href="../css/animate.min.css" rel="stylesheet">
+      <!-- Custom styling plus plugins -->
+      <link href="../css/custom.css" rel="stylesheet">
+      <link href="../css/icheck/flat/green.css" rel="stylesheet">
+      <script src="../js/jquery.min.js"></script>
+      <!--[if lt IE 9]>
+      <script src="../assets/js/ie8-responsive-file-warning.js"></script>
+      <![endif]-->
+      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+   </head>
+   <body style="background:#0074A2;">
+      <div class="">
+         <a class="hiddenanchor" id="toregister"></a>
+         <a class="hiddenanchor" id="tologin"></a>
+         <div id="wrapper">
+            <div id="login" class="animate form">
+               <section class="login_content">
+                  <form id="form_login" data-parsley-validate class="form-horizontal form-label-left" action="index.html">
+                     <h2><img src="../images/cabe.png"></h2>
+                     <div class="form-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                        <input type="email" class="form-control customemail" placeholder="Correo electrónico" aria-describedby="basic-addon1" name="userEmail"/>
+                     </div>
+                     <div class="form-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-key"></i></span>
+                        <input type="password" class="form-control" placeholder="Contraseña" aria-describedby="basic-addon1" name="userPassword"/>
+                     </div>
+                     <button class="btn btn-primary col-md-12" type="submit">Ingresar</button>
+                     <p class="change_link"><a href="#toregister" class="to_register link_action">¿Se te olvidó tu contraseña?</a></p>
+                  </form>
+                  <!-- form -->
+               </section>
+               <!-- content -->
+            </div>
+            <div id="register" class="animate form">
+               <section class="login_content">
+                  <form id="form_reset" data-parsley-validate class="form-horizontal form-label-left">
+                     <h2><img src="../images/cabe.png"></h2>
+                     <div class="form-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                        <input type="email" class="form-control customemail" placeholder="Correo electrónico" aria-describedby="basic-addon1" name="emailRecovery"/>
+                     </div>
+                     <button class="btn btn-primary col-md-12" type="submit">Recuperar</button>
+                     <p class="change_link"><a href="#tologin" class="to_register link_action">Inciar sesión</a></p>
+                  </form>
+                  <!-- form -->
+               </section>
+               <!-- content -->
+            </div>
+         </div>
+      </div>
+
+   <script type="text/javascript" src="../js/jquery.validated.js"></script>
+   <script type="text/javascript">
+   $(document).ready(function() {
+
+         validacionGeneral();
+         $("#form_login").validate({
+             rules: {
+                  userEmail: 
+                  {
+                    required: false,
+                    email : true
+                  },
+                  userPassword: 
+                  {
+                    required: true
+                  }
+             },
+             messages: {
+                userEmail: 
+                {
+                  required: "Es necesario que ingreses tu email",
+                  email: "Ingresa una dirección de correo electrónico válida <b>mail@ejemplo.com</b>"
+                },
+                userPassword: 
+                {
+                  required: "Ingresa tu password"
+                }
+             },
+             success: function(label) {
+                 var dato = $(label).parent().find('.form-control');
+                 var texto = $(label).parent().find('.form-control').attr('data-text');
+                 var name = $(label).parent().find('.form-control').val();
+                 label.html(texto);
+                 label.find("span").html(name);
+                 label.addClass("checked");
+                 dato.removeClass("error");
+             },
+             highlight: function(element, errorClass) {
+                 $(element).parent().find(".error").removeClass("checked");
+                 $(element).parent().find('.form-control').addClass("error");
+             },
+             submitHandler: function(form) {
+                  $("#form_login .btn").addClass("disabled");
+                  form.submit();
+                  return false;
+             },
+         });
+         /******************************/
+         $("#form_reset").validate({
+             rules: {
+                  emailRecovery: 
+                  {
+                    required: false,
+                    email : true
+                  }
+             },
+             messages: {
+                emailRecovery: 
+                {
+                  required: "Es necesario que ingreses tu email",
+                  email: "Ingresa una dirección de correo electrónico válida <b>mail@ejemplo.com</b>"
+                }
+             },
+             success: function(label) {
+                 var dato = $(label).parent().find('.form-control');
+                 var texto = $(label).parent().find('.form-control').attr('data-text');
+                 var name = $(label).parent().find('.form-control').val();
+                 label.html(texto);
+                 label.find("span").html(name);
+                 label.addClass("checked");
+                 dato.removeClass("error");
+             },
+             highlight: function(element, errorClass) {
+                 $(element).parent().find(".error").removeClass("checked");
+                 $(element).parent().find('.form-control').addClass("error");
+             },
+             submitHandler: function(form) {
+                  $("#form_reset .btn").addClass("disabled");
+                  form.submit();
+                  return false;
+             },
+         });
+
+   });
+   function validacionGeneral() {
+        $.validator.addMethod("regex", function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        }, "");
+        $.validator.addMethod("defaultInvalid", function(value, element)
+        {
+            if (element.value == element.defaultValue)
+            {
+                return false;
+            }
+            return true;
+        }, "");
+        $.validator.addMethod("customemail", function(value, element) {
+            var emailReg = new RegExp(/^([a-zA-Z0-9_.\-+])+\@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/);
+            var valid = emailReg.test(value);
+            return valid;
+        },
+                "Ingresa una dirección de correo electrónico válida <b>mail@ejemplo.com</b>"
+                );
+    }
+   </script>
+   </body>
+</html>
